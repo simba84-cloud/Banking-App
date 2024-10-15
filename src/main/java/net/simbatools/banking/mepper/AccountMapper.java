@@ -11,7 +11,7 @@ Account account = new Account(
         accountDto.getBalance());
         return account;
     }
-    public static AccountDto accountDto(Account account){
+    public static AccountDto mapToAccountDto(Account account){
         AccountDto accountDto = new AccountDto(
                 account.getId(),
                 account.getAccountHolderName(),
