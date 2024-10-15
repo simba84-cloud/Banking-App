@@ -1,13 +1,14 @@
-package net.simbatools.banking.service;
+package net.simbatools.banking.service.impl;
 
 import net.simbatools.banking.dto.AccountDto;
 import net.simbatools.banking.entity.Account;
 import net.simbatools.banking.mepper.AccountMapper;
 import net.simbatools.banking.repository.AccountRepository;
+import net.simbatools.banking.service.AccountService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AccountServiceImpl implements AccountService{
+public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
 
     public AccountServiceImpl(AccountRepository accountRepository) {
