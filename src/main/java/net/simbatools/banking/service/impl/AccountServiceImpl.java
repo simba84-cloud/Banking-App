@@ -7,6 +7,9 @@ import net.simbatools.banking.repository.AccountRepository;
 import net.simbatools.banking.service.AccountService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
@@ -37,5 +40,26 @@ public class AccountServiceImpl implements AccountService {
        account.setBalance(total);
        Account savedAccount = accountRepository.save(account);
         return AccountMapper.mapToAccountDto(savedAccount);
+    }
+
+    @Override
+    public AccountDto withdraw(Long id, double amount) {
+        Account account = accountRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("Account does not exist"));
+        if(account.getBalance() < amount){
+            throw new RuntimeException("insufficient balance");
+        }
+        double total = account.getBalance()-amount;
+        account.setBalance(total);
+        Account savedAccount = accountRepository.save(account);
+        return AccountMapper.mapToAccountDto(savedAccount);
+    }
+
+    @Override
+    public List<AccountDto> getAllAccounts() {
+       List<Account>accounts = accountRepository.findAll();
+       return accounts.stream().map(AccountMapper::mapToAccountDto)
+               .collect(Collectors.toList());
+
     }
 }
